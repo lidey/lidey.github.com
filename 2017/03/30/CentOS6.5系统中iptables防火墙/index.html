@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Lidey Blog" />
+  <meta name="keywords" content="iptables," />
 
 
 
@@ -87,13 +87,16 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="分类">
-<meta property="og:url" content="https://lidey.github.io/categories/index.html">
+<meta name="description" content="1.开放端口12345678iptables -I INPUT -p tcp --dport 80 -j ACCEPTiptables -I INPUT -p tcp --dport 22 -j ACCEPTiptables -I INPUT -p tcp --dport 3306 -j ACCEPT#保存修改/etc/rc.d/init.d/iptables save#重启服务/etc/init">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CentOS6.5系统中iptables防火墙">
+<meta property="og:url" content="https://lidey.github.io/2017/03/30/CentOS6.5系统中iptables防火墙/index.html">
 <meta property="og:site_name" content="Lidey's Blog">
-<meta property="og:updated_time" content="2017-03-14T07:17:46.000Z">
+<meta property="og:description" content="1.开放端口12345678iptables -I INPUT -p tcp --dport 80 -j ACCEPTiptables -I INPUT -p tcp --dport 22 -j ACCEPTiptables -I INPUT -p tcp --dport 3306 -j ACCEPT#保存修改/etc/rc.d/init.d/iptables save#重启服务/etc/init">
+<meta property="og:updated_time" content="2017-03-30T07:49:55.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="分类">
+<meta name="twitter:title" content="CentOS6.5系统中iptables防火墙">
+<meta name="twitter:description" content="1.开放端口12345678iptables -I INPUT -p tcp --dport 80 -j ACCEPTiptables -I INPUT -p tcp --dport 22 -j ACCEPTiptables -I INPUT -p tcp --dport 3306 -j ACCEPT#保存修改/etc/rc.d/init.d/iptables save#重启服务/etc/init">
 
 
 
@@ -121,19 +124,13 @@
 
 
 
-  <link rel="canonical" href="https://lidey.github.io/categories/"/>
+  <link rel="canonical" href="https://lidey.github.io/2017/03/30/CentOS6.5系统中iptables防火墙/"/>
 
 
 
 
 
-  <title>
-  
-
-  
-    分类 | Lidey's Blog
-  
-</title>
+  <title> CentOS6.5系统中iptables防火墙 | Lidey's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -158,7 +155,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left  ">
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -263,25 +260,175 @@
             
 
   <div id="posts" class="posts-expand">
-  <header class="post-header">
+    
 
-	<h1 class="post-title" itemprop="name headline">分类</h1>
+  
 
+  
+  
+  
 
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://lidey.github.io/2017/03/30/CentOS6.5系统中iptables防火墙/">
 
-</header>
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lidey">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lidey's Blog">
+    </span>
 
     
-    
-      <div class="category-all-page">
-        <div class="category-all-title">
-            目前共计 4 个分类
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                CentOS6.5系统中iptables防火墙
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-30T15:46:15+08:00">
+                2017-03-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CentOS/" itemprop="url" rel="index">
+                    <span itemprop="name">CentOS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
         </div>
-        <div class="category-all">
-          <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CentOS/">CentOS</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/golang/">golang</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/macOS/">macOS</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a><span class="category-list-count">1</span></li></ul>
-        </div>
-      </div>
+      </header>
     
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="1-开放端口"><a href="#1-开放端口" class="headerlink" title="1.开放端口"></a>1.开放端口</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">iptables -I INPUT -p tcp --dport 80 -j ACCEPT</div><div class="line">iptables -I INPUT -p tcp --dport 22 -j ACCEPT</div><div class="line">iptables -I INPUT -p tcp --dport 3306 -j ACCEPT</div><div class="line"></div><div class="line"><span class="comment">#保存修改</span></div><div class="line">/etc/rc.d/init.d/iptables save</div><div class="line"><span class="comment">#重启服务</span></div><div class="line">/etc/init.d/iptables restart</div></pre></td></tr></table></figure>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iptables/" rel="tag"># iptables</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/30/CentOS6.5安装GitLab9/" rel="next" title="CentOS6.5安装GitLab9">
+                <i class="fa fa-chevron-left"></i> CentOS6.5安装GitLab9
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
           
@@ -313,8 +460,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.png"
@@ -396,6 +552,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-开放端口"><span class="nav-number">1.</span> <span class="nav-text">1.开放端口</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -508,6 +680,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
 
   
 
