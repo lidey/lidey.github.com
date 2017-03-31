@@ -267,6 +267,184 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://lidey.github.io/2017/03/31/CentOS6.5安装Nexus3.2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lidey">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lidey's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/03/31/CentOS6.5安装Nexus3.2/" itemprop="url">
+                  CentOS6.5安装Nexus3.2
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-31T10:32:01+08:00">
+                2017-03-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CentOS/" itemprop="url" rel="index">
+                    <span itemprop="name">CentOS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Nexus介绍"><a href="#Nexus介绍" class="headerlink" title="Nexus介绍"></a>Nexus介绍</h2><p>Nexus是一个强大的Maven仓库管理器，它极大地简化了本地内部仓库的维护和外部仓库的访问。<br>如果使用了公共的Maven仓库服务器，可以从Maven中央仓库下载所需要的构件（Artifact），但这通常不是一个好的做法。<br>正常做法是在本地架设一个Maven仓库服务器，即利用Nexus私服可以只在一个地方就能够完全控制访问和部署在你所维护仓库中的每个Artifact。<br>Nexus在代理远程仓库的同时维护本地仓库，以降低中央仓库的负荷,节省外网带宽和时间，Nexus私服就可以满足这样的需要。<br>Nexus是一套“开箱即用”的系统不需要数据库，它使用文件系统加Lucene来组织数据。<br>Nexus使用ExtJS来开发界面，利用Restlet来提供完整的REST APIs，通过m2eclipse与Eclipse集成使用。<br>Nexus支持WebDAV与LDAP安全身份认证。<br>Nexus还提供了强大的仓库管理功能，构件搜索功能，它基于REST，友好的UI是一个extjs的REST客户端，它占用较少的内存，基于简单文件系统而非数据库。  </p>
+<h2 id="为什么要构建Nexus私服？"><a href="#为什么要构建Nexus私服？" class="headerlink" title="为什么要构建Nexus私服？"></a>为什么要构建Nexus私服？</h2><p>如果没有Nexus私服，我们所需的所有构件都需要通过maven的中央仓库和第三方的Maven仓库下载到本地，而一个团队中的所有人都重复的从maven仓库下载构件无疑加大了仓库的负载和浪费了外网带宽，如果网速慢的话，还会影响项目的进程。很多情况下项目的开发都是在内网进行的，连接不到maven仓库怎么办呢？开发的公共构件怎么让其它项目使用？这个时候我们不得不为自己的团队搭建属于自己的maven私服，这样既节省了网络带宽也会加速项目搭建的进程，当然前提条件就是你的私服中拥有项目所需的所有构件。  </p>
+<h2 id="总之，在本地构建nexus私服的好处有："><a href="#总之，在本地构建nexus私服的好处有：" class="headerlink" title="总之，在本地构建nexus私服的好处有："></a>总之，在本地构建nexus私服的好处有：</h2><ol>
+<li>加速构建；</li>
+<li>节省带宽；</li>
+<li>节省中央maven仓库的带宽；</li>
+<li>稳定（应付一旦中央服务器出问题的情况）；</li>
+<li>控制和审计；</li>
+<li>能够部署第三方构件；</li>
+<li>可以建立本地内部仓库；</li>
+<li>可以建立公共仓库<br>这些优点使得Nexus日趋成为最流行的Maven仓库管理器。</li>
+</ol>
+<h2 id="Maven的安装"><a href="#Maven的安装" class="headerlink" title="Maven的安装"></a>Maven的安装</h2><p>下载地址：<a href="http://maven.apache.org/download.cgi" target="_blank" rel="external">http://maven.apache.org/download.cgi</a><br>提前在服务器上安装jdk环境<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">tar -zvxf apache-maven-3.3.9-bin.tar.gz </div><div class="line">mv apache-maven-3.3.9 /usr/<span class="built_in">local</span>/maven</div></pre></td></tr></table></figure></p>
+<p>接着配置系统环境变量，在<code>/etc/profile</code>文件底部添加如下内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">JAVA_HOME=/usr/java/jdk1.8.0_121</div><div class="line">JRE_HOME=/usr/java/jdk1.8.0_121/jre</div><div class="line">MAVEN_HOME=/usr/local/maven</div><div class="line">PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin:$MAVEN_HOME/bin</div><div class="line">CLASSPATH=:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$JRE_HOME/lib</div><div class="line">export JAVA_HOME JRE_HOME PATH CLASSPATH MAVEN_HOME</div></pre></td></tr></table></figure></p>
+<p>更新变量<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">source</span> /etc/profile</div></pre></td></tr></table></figure></p>
+<p>最后验证是否安装成功，出现如下信息，说明安装成功<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mvn --version</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Apache Maven 3.3.9 (bb52d8502b132ec0a5a3f4c09453c07478323dc5; 2015-11-11T00:41:47+08:00)</div><div class="line">Maven home: /usr/local/maven</div><div class="line">Java version: 1.8.0_111, vendor: Oracle Corporation</div><div class="line">Java home: /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.111-2.b15.el7_3.x86_64/jre</div><div class="line">Default locale: en_US, platform encoding: UTF-8</div><div class="line">OS name: &quot;linux&quot;, version: &quot;3.10.0-327.el7.x86_64&quot;, arch: &quot;amd64&quot;, family: &quot;unix&quot;</div></pre></td></tr></table></figure>
+<h2 id="Nexus安装"><a href="#Nexus安装" class="headerlink" title="Nexus安装"></a>Nexus安装</h2><p>Nexus的安装有两种实现方式：</p>
+<ol>
+<li><p>war包安装方式<br>下载地址：<a href="https://sonatype-download.global.ssl.fastly.net/nexus/oss/nexus-2.14.2-01.war" target="_blank" rel="external">https://sonatype-download.global.ssl.fastly.net/nexus/oss/nexus-2.14.2-01.war</a><br>直接将war包放在tomcat的根目录下，启动tomcat就可以用了  </p>
+</li>
+<li><p>源码安装方式<br>下载地址：<a href="https://www.sonatype.com/download-oss-sonatype" target="_blank" rel="external">https://www.sonatype.com/download-oss-sonatype</a>  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">tar -zvxf nexus-3.2.1-01-unix.tar.gz</div><div class="line">mv nexus-3.2.1-01 /usr/<span class="built_in">local</span>/nexus</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>配置系统环境变量，在<code>/etc/profile</code>文件底部添加如下内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">JAVA_HOME=/usr/java/jdk1.8.0_121</div><div class="line">JRE_HOME=/usr/java/jdk1.8.0_121/jre</div><div class="line">MAVEN_HOME=/usr/local/maven</div><div class="line">NEXUS_HOME=/usr/local/nexus</div><div class="line">PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin:$MAVEN_HOME/bin:$NEXUS_HOME/bin</div><div class="line">CLASSPATH=:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$JRE_HOME/lib</div><div class="line">export JAVA_HOME JRE_HOME PATH CLASSPATH MAVEN_HOME NEXUS_HOME</div><div class="line">export RUN_AS_USER=root</div></pre></td></tr></table></figure></p>
+<p>注册为系统服务<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">ln <span class="_">-s</span> <span class="variable">$NEXUS_HOME</span>/bin/nexus /etc/init.d/nexus</div><div class="line"><span class="built_in">cd</span> /etc/init.d</div><div class="line">chkconfig --add nexus</div><div class="line">chkconfig --levels 345 nexus on</div><div class="line">service nexus start</div></pre></td></tr></table></figure></p>
+<p>启动nexus（默认端口是8081）<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/usr/<span class="built_in">local</span>/nexus/bin/nexus</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">WARNING: ************************************************************</div><div class="line">WARNING: Detected execution as &quot;root&quot; user.  This is NOT recommended!</div><div class="line">WARNING: ************************************************************</div><div class="line">Usage: /usr/local/nexus/bin/nexus &#123;start|stop|run|run-redirect|status|restart|force-reload&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/usr/<span class="built_in">local</span>/nexus/bin/nexus start</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">WARNING: ************************************************************</div><div class="line">WARNING: Detected execution as &quot;root&quot; user. This is NOT recommended! </div><div class="line">WARNING: ************************************************************</div><div class="line">Starting nexus</div></pre></td></tr></table></figure>
+<p>上面在启动过程中出现告警：不推荐使用root用户启动。这个告警不影响nexus的正常访问和使用。<br>去掉上面WARNING的办法<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vi + /etc/profile</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">export RUN_AS_USER=root</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">source</span> /etc/profile</div></pre></td></tr></table></figure>
+<p>在部署机上的iptables里打开8081端口<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">iptables -I INPUT -p tcp --dport 8081 -j ACCEPT</div><div class="line">/etc/init.d/iptables save</div></pre></td></tr></table></figure></p>
+<p>访问nexus，即<a href="http://localhost:8081,默认用户名(admin)和默认密码（admin123）" target="_blank" rel="external">http://localhost:8081,默认用户名(admin)和默认密码（admin123）</a>   </p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="https://lidey.github.io/2017/03/30/CentOS6.5系统中iptables防火墙/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1347,7 +1525,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1369,7 +1547,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
